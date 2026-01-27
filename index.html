@@ -2,118 +2,73 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>AM AI SYSTEM</title>
+<title>JARVIS BOOT SYSTEM</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:"Courier New",monospace}
 body{background:black;color:#00eaff;overflow:hidden}
+.center{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center}
 
-/* COMMON */
-.center{
-    height:100vh;display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-}
-input{
-    padding:15px;width:280px;
-    background:black;color:#00eaff;
-    border:2px solid #00eaff;
-    font-size:1.1rem;text-align:center;
-}
-button{
-    margin-top:15px;padding:12px 40px;
-    background:#00eaff;border:none;
-    font-size:1rem;cursor:pointer;
-}
+/* BOOT */
+#boot{position:fixed;inset:0;background:black;color:#00eaff}
+#boot h1{font-size:2.2rem;text-shadow:0 0 20px #00eaff}
+#bar{width:300px;height:10px;border:1px solid #00eaff;margin-top:20px}
+#fill{height:100%;width:0;background:#00eaff}
 
-/* WARNING */
-#warning{
-    display:none;background:red;color:white;
-    animation:shake .4s infinite;
-}
-@keyframes shake{
-    0%{transform:translateX(0)}
-    25%{transform:translateX(-10px)}
-    50%{transform:translateX(10px)}
-    75%{transform:translateX(-10px)}
-    100%{transform:translateX(0)}
-}
+/* LOGIN / OTHERS */
+input{padding:15px;width:280px;background:black;color:#00eaff;border:2px solid #00eaff;font-size:1.1rem;text-align:center}
+button{margin-top:15px;padding:12px 40px;background:#00eaff;border:none;font-size:1rem}
+#warning{display:none;background:red;color:white;animation:shake .4s infinite}
+@keyframes shake{25%{transform:translateX(-10px)}50%{transform:translateX(10px)}}
 
 /* FACE SCAN */
-#scan{display:none;background:black}
-.scanBox{
-    width:260px;height:320px;
-    border:2px solid #00eaff;
-    position:relative;
-}
-.scanLine{
-    position:absolute;width:100%;height:4px;
-    background:#00eaff;
-    animation:scan 2s infinite;
-}
+#scan{display:none}
+.scanBox{width:260px;height:320px;border:2px solid #00eaff;position:relative}
+.scanLine{height:4px;width:100%;background:#00eaff;position:absolute;animation:scan 2s infinite}
 @keyframes scan{from{top:0}to{top:100%}}
 
-/* AI PAGE */
+/* AI */
 #ai{display:none}
-.grid{
-    position:fixed;inset:0;
-    background:
-    linear-gradient(#00eaff22 1px,transparent 1px),
-    linear-gradient(90deg,#00eaff22 1px,transparent 1px);
-    background-size:40px 40px;
-    z-index:-1;
-}
-#core{
-    position:absolute;top:25%;left:50%;
-    transform:translate(-50%,-50%);
-    width:180px;height:180px;
-    border-radius:50%;
-    border:3px solid #00eaff;
-    box-shadow:0 0 50px #00eaff;
-    animation:spin 6s linear infinite;
-}
-@keyframes spin{
-    from{transform:translate(-50%,-50%) rotate(0)}
-    to{transform:translate(-50%,-50%) rotate(360deg)}
-}
+.grid{position:fixed;inset:0;
+background:linear-gradient(#00eaff22 1px,transparent 1px),
+linear-gradient(90deg,#00eaff22 1px,transparent 1px);
+background-size:40px 40px;z-index:-1}
+#core{position:absolute;top:25%;left:50%;
+transform:translate(-50%,-50%);
+width:180px;height:180px;border-radius:50%;
+border:3px solid #00eaff;box-shadow:0 0 50px #00eaff;
+animation:spin 6s linear infinite}
+@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
 
 /* TERMINAL */
-#terminal{
-    position:absolute;
-    bottom:30px;left:50%;
-    transform:translateX(-50%);
-    width:90%;max-width:900px;
-    height:280px;
-    border:2px solid #00eaff;
-    padding:15px;
-    background:rgba(0,0,0,.85);
-}
-#output{white-space:pre-wrap}
-#cmd{
-    width:100%;
-    background:black;color:#00eaff;
-    border:none;outline:none;
-    font-size:1rem;
-}
-.cursor{animation:blink 1s infinite}
-@keyframes blink{50%{opacity:0}}
+#terminal{position:absolute;bottom:30px;left:50%;
+transform:translateX(-50%);
+width:90%;max-width:900px;height:280px;
+border:2px solid #00eaff;padding:15px;
+background:rgba(0,0,0,.85)}
+#cmd{width:100%;background:black;color:#00eaff;border:none;font-size:1rem}
 </style>
 </head>
 
 <body>
 
+<!-- BOOT -->
+<div id="boot" class="center">
+<h1>AAYUSHMAN INDUSTRIES</h1>
+<p>J.A.R.V.I.S SYSTEM BOOTING...</p>
+<div id="bar"><div id="fill"></div></div>
+</div>
+
 <div class="grid"></div>
 
 <!-- NAME -->
-<div id="namePage" class="center">
+<div id="namePage" class="center" style="display:none">
 <h1>SECURE AI SYSTEM</h1>
 <input id="name" placeholder="ENTER NAME">
 <button onclick="checkName()">ENTER</button>
 </div>
 
-<!-- PASSWORD -->
+<!-- PASS -->
 <div id="passPage" class="center" style="display:none">
 <h1>PASSWORD REQUIRED</h1>
 <input id="pass" type="password" placeholder="ENTER PASSWORD">
@@ -126,7 +81,7 @@ button{
 <p id="tries">2 ATTEMPTS LEFT</p>
 </div>
 
-<!-- FACE SCAN -->
+<!-- SCAN -->
 <div id="scan" class="center">
 <h1>FACE SCAN IN PROGRESS</h1>
 <div class="scanBox"><div class="scanLine"></div></div>
@@ -142,85 +97,47 @@ button{
 </div>
 
 <!-- AUDIO -->
-<audio id="hum" loop>
-<source src="https://assets.mixkit.co/sfx/preview/mixkit-sci-fi-hum-2135.mp3">
-</audio>
-
-<audio id="bgm" loop>
-<source src="https://assets.mixkit.co/music/preview/mixkit-cyberpunk-ambient-2161.mp3">
-</audio>
+<audio id="hum" loop src="https://assets.mixkit.co/sfx/preview/mixkit-sci-fi-hum-2135.mp3"></audio>
+<audio id="bgm" loop src="https://assets.mixkit.co/music/preview/mixkit-cyberpunk-ambient-2161.mp3"></audio>
 
 <script>
-let attempts=2;
-const logs=[
-"Initializing JARVIS AI...",
-"Neural core online.",
-"Security protocols loaded.",
-"Welcome back AAYUSHMAN.",
-"Awaiting commands..."
-];
+let fill=document.getElementById("fill"),w=0;
+let boot=setInterval(()=>{
+w+=5;fill.style.width=w+"%";
+if(w>=100){
+clearInterval(boot);
+document.getElementById("boot").style.display="none";
+namePage.style.display="flex";
+}
+},200);
 
-function speak(text){
-let u=new SpeechSynthesisUtterance(text);
-u.rate=.7;u.pitch=.5;u.volume=1;
+let attempts=2;
+function speak(t){
+let u=new SpeechSynthesisUtterance(t);
+u.rate=.7;u.pitch=.5;
 speechSynthesis.speak(u);
 }
-
 function checkName(){
-if(name.value.toUpperCase()==="AAYUSHMAN"){
-namePage.style.display="none";
-passPage.style.display="flex";
-}else fail();
+name.value.toUpperCase()==="AAYUSHMAN"?
+(namePage.style.display="none",passPage.style.display="flex"):fail();
 }
-
 function checkPass(){
-if(pass.value==="JARVIS"){
-passPage.style.display="none";
-scan.style.display="flex";
+pass.value==="JARVIS"?
+(passPage.style.display="none",scan.style.display="flex",
 setTimeout(()=>{
 scan.style.display="none";
 ai.style.display="block";
-hum.volume=0.3;
-bgm.volume=0.25;
-hum.play();
-bgm.play();
+hum.volume=.3;bgm.volume=.25;
+hum.play();bgm.play();
 speak("WELCOME BACK AAYUSHMAN. LET'S COMPLETE THE WORK.");
-startLogs();
-},3000);
-}else fail();
+},3000)):fail();
 }
-
 function fail(){
 attempts--;
-namePage.style.display="none";
-passPage.style.display="none";
 warning.style.display="flex";
 tries.innerText=attempts+" ATTEMPTS LEFT";
-if(attempts>0){
-setTimeout(()=>{
-warning.style.display="none";
-namePage.style.display="flex";
-},2000);
-}else tries.innerText="SYSTEM LOCKED";
+setTimeout(()=>{warning.style.display="none";namePage.style.display="flex"},2000);
 }
-
-function startLogs(){
-let i=0;
-function next(){
-if(i<logs.length){
-output.innerHTML+=logs[i++]+"\n";
-setTimeout(next,500);
-}
-}
-next();
-}
-
-cmd.addEventListener("keydown",e=>{
-if(e.key==="Enter"){
-output.innerHTML+="> "+cmd.value+"\n";
-cmd.value="";
-}
-});
 </script>
 
 </body>
