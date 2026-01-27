@@ -2,211 +2,226 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<title>AM AI SYSTEM</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aayushman World Runner</title>
+
 <style>
-body { margin:0; font-family:sans-serif; background: #87ceeb; overflow:hidden; }
-#homeScreen, #gameScreen { width:100%; height:100vh; position:absolute; top:0; left:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
-#gameScreen { display:none; background:#00bfff; }
-button { padding:10px 20px; margin:10px; font-size:1.2em; cursor:pointer; }
-#stats { margin:10px; font-size:1.2em; color:white; text-align:center; }
-canvas { background:#00aaff; display:block; margin:0 auto; }
-#banner { position:absolute; top:50px; width:100%; text-align:center; font-size:2rem; color:yellow; font-weight:bold; display:none; }
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Courier New",monospace}
+body{background:black;color:#00eaff;overflow:hidden}
+
+/* COMMON */
+.center{
+    height:100vh;display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+}
+input{
+    padding:15px;width:280px;
+    background:black;color:#00eaff;
+    border:2px solid #00eaff;
+    font-size:1.1rem;text-align:center;
+}
+button{
+    margin-top:15px;padding:12px 40px;
+    background:#00eaff;border:none;
+    font-size:1rem;cursor:pointer;
+}
+
+/* WARNING */
+#warning{
+    display:none;background:red;color:white;
+    animation:shake .4s infinite;
+}
+@keyframes shake{
+    0%{transform:translateX(0)}
+    25%{transform:translateX(-10px)}
+    50%{transform:translateX(10px)}
+    75%{transform:translateX(-10px)}
+    100%{transform:translateX(0)}
+}
+
+/* FACE SCAN */
+#scan{display:none;background:black}
+.scanBox{
+    width:260px;height:320px;
+    border:2px solid #00eaff;
+    position:relative;
+}
+.scanLine{
+    position:absolute;width:100%;height:4px;
+    background:#00eaff;
+    animation:scan 2s infinite;
+}
+@keyframes scan{from{top:0}to{top:100%}}
+
+/* AI PAGE */
+#ai{display:none}
+.grid{
+    position:fixed;inset:0;
+    background:
+    linear-gradient(#00eaff22 1px,transparent 1px),
+    linear-gradient(90deg,#00eaff22 1px,transparent 1px);
+    background-size:40px 40px;
+    z-index:-1;
+}
+#core{
+    position:absolute;top:25%;left:50%;
+    transform:translate(-50%,-50%);
+    width:180px;height:180px;
+    border-radius:50%;
+    border:3px solid #00eaff;
+    box-shadow:0 0 50px #00eaff;
+    animation:spin 6s linear infinite;
+}
+@keyframes spin{
+    from{transform:translate(-50%,-50%) rotate(0)}
+    to{transform:translate(-50%,-50%) rotate(360deg)}
+}
+
+/* TERMINAL */
+#terminal{
+    position:absolute;
+    bottom:30px;left:50%;
+    transform:translateX(-50%);
+    width:90%;max-width:900px;
+    height:280px;
+    border:2px solid #00eaff;
+    padding:15px;
+    background:rgba(0,0,0,.85);
+}
+#output{white-space:pre-wrap}
+#cmd{
+    width:100%;
+    background:black;color:#00eaff;
+    border:none;outline:none;
+    font-size:1rem;
+}
+.cursor{animation:blink 1s infinite}
+@keyframes blink{50%{opacity:0}}
 </style>
 </head>
+
 <body>
 
-<!-- Home Page -->
-<div id="homeScreen">
-    <h1>Aayushman World Runner</h1>
-    <img src="https://i.ibb.co/8YkD7Pm/ansh.png" alt="Ansh" width="100" height="100">
-    <h2 id="playerName">ANSH</h2>
-    <div id="stats">High Score: <span id="highScore">0</span> | Coins: <span id="coins">0</span></div>
-    <button id="playBtn">Play Now</button>
-    <button id="backBtn" style="display:none;">Go Back</button>
+<div class="grid"></div>
+
+<!-- NAME -->
+<div id="namePage" class="center">
+<h1>SECURE AI SYSTEM</h1>
+<input id="name" placeholder="ENTER NAME">
+<button onclick="checkName()">ENTER</button>
 </div>
 
-<!-- Game Screen -->
-<div id="gameScreen">
-    <div id="banner">Welcome to Aayushman World!</div>
-    <canvas id="gameCanvas" width="800" height="500"></canvas>
-    <div id="gameStats" style="position:absolute; top:10px; left:10px; color:white; font-size:18px;">
-        Score: <span id="scoreDisplay">0</span> | Coins: <span id="coinDisplay">0</span>
-    </div>
+<!-- PASSWORD -->
+<div id="passPage" class="center" style="display:none">
+<h1>PASSWORD REQUIRED</h1>
+<input id="pass" type="password" placeholder="ENTER PASSWORD">
+<button onclick="checkPass()">VERIFY</button>
 </div>
+
+<!-- WARNING -->
+<div id="warning" class="center">
+<h1>⚠ ACCESS DENIED ⚠</h1>
+<p id="tries">2 ATTEMPTS LEFT</p>
+</div>
+
+<!-- FACE SCAN -->
+<div id="scan" class="center">
+<h1>FACE SCAN IN PROGRESS</h1>
+<div class="scanBox"><div class="scanLine"></div></div>
+</div>
+
+<!-- AI -->
+<div id="ai">
+<div id="core"></div>
+<div id="terminal">
+<div id="output"></div>
+<input id="cmd" placeholder="> type command and press enter">
+</div>
+</div>
+
+<!-- AUDIO -->
+<audio id="hum" loop>
+<source src="https://assets.mixkit.co/sfx/preview/mixkit-sci-fi-hum-2135.mp3">
+</audio>
+
+<audio id="bgm" loop>
+<source src="https://assets.mixkit.co/music/preview/mixkit-cyberpunk-ambient-2161.mp3">
+</audio>
 
 <script>
-// Home and game screen toggle
-const homeScreen = document.getElementById('homeScreen');
-const gameScreen = document.getElementById('gameScreen');
-const playBtn = document.getElementById('playBtn');
-const backBtn = document.getElementById('backBtn');
-let highScore = 0;
-let totalCoins = 0;
+let attempts=2;
+const logs=[
+"Initializing JARVIS AI...",
+"Neural core online.",
+"Security protocols loaded.",
+"Welcome back AAYUSHMAN.",
+"Awaiting commands..."
+];
 
-playBtn.onclick = ()=>{
-    homeScreen.style.display='none';
-    gameScreen.style.display='flex';
-    startGame();
-};
-
-// Player class
-class Player {
-    constructor(name,color,free=true,isBoss=false){
-        this.name=name;
-        this.color=color;
-        this.x=100;
-        this.y=lanes[0];
-        this.width=50;
-        this.height=50;
-        this.superPowerActive=false;
-        this.boatPowerActive=false;
-        this.free=free;
-        this.isBoss=isBoss;
-        this.currentLane=0;
-        this.trailParticles=[];
-    }
-    draw(ctx){
-        if(this.isBoss){
-            ctx.shadowBlur=20;
-            ctx.shadowColor="gold";
-        } else ctx.shadowBlur=0;
-        ctx.fillStyle=this.color;
-        ctx.fillRect(this.x,this.y,this.width,this.height);
-
-        if(this.isBoss){
-            this.trailParticles.push({x:this.x+this.width/2, y:this.y+this.height/2, alpha:1});
-            this.trailParticles.forEach((p,i)=>{
-                ctx.fillStyle=`rgba(255,215,0,${p.alpha})`;
-                ctx.beginPath();
-                ctx.arc(p.x,p.y,10,0,Math.PI*2);
-                ctx.fill();
-                p.alpha-=0.03;
-                if(p.alpha<=0) this.trailParticles.splice(i,1);
-            });
-        }
-
-        if(this.superPowerActive){
-            ctx.strokeStyle="aqua";
-            ctx.lineWidth=4;
-            ctx.strokeRect(this.x-5,this.y-5,this.width+10,this.height+10);
-        }
-        if(this.boatPowerActive){
-            ctx.fillStyle="gold";
-            ctx.fillRect(this.x-10,this.y-10,this.width+20,this.height+20);
-        }
-        ctx.shadowBlur=0;
-    }
-    jump(){ this.y-=100; setTimeout(()=>{ this.y=lanes[this.currentLane]; },400);}
-    switchLane(dir){ 
-        if(dir==='up' && this.currentLane>0){ this.currentLane--; this.y=lanes[this.currentLane];}
-        if(dir==='down' && this.currentLane<lanes.length-1){ this.currentLane++; this.y=lanes[this.currentLane];}
-    }
+function speak(text){
+let u=new SpeechSynthesisUtterance(text);
+u.rate=.7;u.pitch=.5;u.volume=1;
+speechSynthesis.speak(u);
 }
 
-// Boat class
-class Boat{
-    constructor(x,y){ this.x=x; this.y=y; this.width=60; this.height=30; }
-    draw(ctx){
-        ctx.fillStyle="brown";
-        ctx.fillRect(this.x,this.y,this.width,this.height);
-        ctx.fillStyle="white";
-        ctx.fillRect(this.x+10,this.y-10,40,10);
-    }
-    move(){ this.x-=gameSpeed; }
+function checkName(){
+if(name.value.toUpperCase()==="AAYUSHMAN"){
+namePage.style.display="none";
+passPage.style.display="flex";
+}else fail();
 }
 
-// Game variables
-const canvas=document.getElementById('gameCanvas');
-const ctx=canvas.getContext('2d');
-const lanes=[canvas.height-70,canvas.height-140,canvas.height-210,canvas.height-280];
-let gameSpeed=5;
-let score=0;
-let coins=0;
-let boats=[];
+function checkPass(){
+if(pass.value==="JARVIS"){
+passPage.style.display="none";
+scan.style.display="flex";
+setTimeout(()=>{
+scan.style.display="none";
+ai.style.display="block";
+hum.volume=0.3;
+bgm.volume=0.25;
+hum.play();
+bgm.play();
+speak("WELCOME BACK AAYUSHMAN. LET'S COMPLETE THE WORK.");
+startLogs();
+},3000);
+}else fail();
+}
 
-// Create players
-let players=[];
-players.push(new Player("ANSH","red",true));
-players.push(new Player("EKLAVYA","green"));
-players.push(new Player("PIYUSH","orange"));
-players.push(new Player("PRINCE","purple"));
-players.push(new Player("HIMANSHU","pink"));
-players.push(new Player("AAYUSHMAN","blue",false,true));
-for(let i=6;i<50;i++){ players.push(new Player("Player"+(i+1),"gray")); }
+function fail(){
+attempts--;
+namePage.style.display="none";
+passPage.style.display="none";
+warning.style.display="flex";
+tries.innerText=attempts+" ATTEMPTS LEFT";
+if(attempts>0){
+setTimeout(()=>{
+warning.style.display="none";
+namePage.style.display="flex";
+},2000);
+}else tries.innerText="SYSTEM LOCKED";
+}
 
-let currentPlayer=players[0];
+function startLogs(){
+let i=0;
+function next(){
+if(i<logs.length){
+output.innerHTML+=logs[i++]+"\n";
+setTimeout(next,500);
+}
+}
+next();
+}
 
-// Controls
-document.addEventListener('keydown',(e)=>{
-    if(e.key==='ArrowUp') currentPlayer.switchLane('up');
-    if(e.key==='ArrowDown') currentPlayer.switchLane('down');
+cmd.addEventListener("keydown",e=>{
+if(e.key==="Enter"){
+output.innerHTML+="> "+cmd.value+"\n";
+cmd.value="";
+}
 });
-canvas.addEventListener('click',()=>{
-    currentPlayer.jump();
-});
-
-// Spawn boats
-function spawnBoats(){
-    if(Math.random()<0.02){
-        let boatY = lanes[Math.floor(Math.random()*lanes.length)];
-        boats.push(new Boat(canvas.width,boatY));
-    }
-}
-
-// Collision
-function checkCollision(player,boat){
-    return player.x<boat.x+boat.width && player.x+player.width>boat.x &&
-           player.y<boat.y+boat.height && player.y+player.height>boat.y;
-}
-
-// Game loop
-function startGame(){
-    score=0; coins=0; boats=[];
-    function loop(){
-        ctx.clearRect(0,0,canvas.width,canvas.height);
-
-        // Water waves
-        for(let i=0;i<canvas.height;i+=20){
-            ctx.fillStyle=i%40===0?"#1E90FF":"#00BFFF";
-            ctx.fillRect(0,canvas.height-50-i%50,canvas.width,20);
-        }
-
-        // Player
-        currentPlayer.draw(ctx);
-
-        // Boats
-        boats.forEach((b,i)=>{
-            b.move();
-            b.draw(ctx);
-            if(checkCollision(currentPlayer,b)){
-                alert("Game Over! Score: "+score+" Coins: "+coins);
-                if(score>highScore) highScore=score;
-                totalCoins+=coins;
-                document.getElementById('highScore').innerText=highScore;
-                document.getElementById('coins').innerText=totalCoins;
-                homeScreen.style.display='flex';
-                gameScreen.style.display='none';
-            }
-            if(b.x+b.width<0){
-                boats.splice(i,1);
-                score++;
-                coins+=Math.floor(Math.random()*5+1);
-                if(score>=10 && !bannerShown){
-                    document.getElementById('banner').style.display='block';
-                    bannerShown=true;
-                }
-            }
-        });
-
-        document.getElementById('scoreDisplay').innerText=score;
-        document.getElementById('coinDisplay').innerText=coins;
-
-        spawnBoats();
-        requestAnimationFrame(loop);
-    }
-    loop();
-}
 </script>
+
 </body>
 </html>
