@@ -2,141 +2,221 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>JARVIS BOOT SYSTEM</title>
+<title>Rani Lakshmibai – Ultimate National Treasure Project</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:"Courier New",monospace}
-body{background:black;color:#00eaff;overflow:hidden}
-.center{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center}
+body{
+    margin:0;
+    font-family: "Georgia", serif;
+    background:#f4f4f4;
+    line-height:2;
+}
+header{
+    background:linear-gradient(120deg,#7b0000,#ff9933,#138808);
+    color:white;
+    text-align:center;
+    padding:60px 20px;
+}
+section{
+    background:white;
+    margin:40px;
+    padding:50px;
+    border-radius:20px;
+    box-shadow:0 15px 35px rgba(0,0,0,0.25);
+}
+h1,h2,h3{
+    color:#7b1e1e;
+}
+img{
+    width:260px;
+    border-radius:15px;
+    margin:15px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.3);
+}
+.left{float:left}
+.right{float:right}
+.clear{clear:both}
 
-/* BOOT */
-#boot{position:fixed;inset:0;background:black;color:#00eaff}
-#boot h1{font-size:2.2rem;text-shadow:0 0 20px #00eaff}
-#bar{width:300px;height:10px;border:1px solid #00eaff;margin-top:20px}
-#fill{height:100%;width:0;background:#00eaff}
+button{
+    padding:12px 25px;
+    border:none;
+    border-radius:25px;
+    font-size:18px;
+    background:#7b1e1e;
+    color:white;
+    cursor:pointer;
+}
+button:hover{background:#4d0f0f}
 
-/* LOGIN / OTHERS */
-input{padding:15px;width:280px;background:black;color:#00eaff;border:2px solid #00eaff;font-size:1.1rem;text-align:center}
-button{margin-top:15px;padding:12px 40px;background:#00eaff;border:none;font-size:1rem}
-#warning{display:none;background:red;color:white;animation:shake .4s infinite}
-@keyframes shake{25%{transform:translateX(-10px)}50%{transform:translateX(10px)}}
+.timeline{
+    width:100%;
+    border-collapse:collapse;
+}
+.timeline th,.timeline td{
+    border:1px solid #ccc;
+    padding:15px;
+}
+.timeline th{
+    background:#ff9933;
+}
 
-/* FACE SCAN */
-#scan{display:none}
-.scanBox{width:260px;height:320px;border:2px solid #00eaff;position:relative}
-.scanLine{height:4px;width:100%;background:#00eaff;position:absolute;animation:scan 2s infinite}
-@keyframes scan{from{top:0}to{top:100%}}
+.audio-box{
+    text-align:center;
+    margin:30px 0;
+    background:#fff3e0;
+    padding:30px;
+    border-radius:15px;
+}
 
-/* AI */
-#ai{display:none}
-.grid{position:fixed;inset:0;
-background:linear-gradient(#00eaff22 1px,transparent 1px),
-linear-gradient(90deg,#00eaff22 1px,transparent 1px);
-background-size:40px 40px;z-index:-1}
-#core{position:absolute;top:25%;left:50%;
-transform:translate(-50%,-50%);
-width:180px;height:180px;border-radius:50%;
-border:3px solid #00eaff;box-shadow:0 0 50px #00eaff;
-animation:spin 6s linear infinite}
-@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.video{
+    text-align:center;
+}
 
-/* TERMINAL */
-#terminal{position:absolute;bottom:30px;left:50%;
-transform:translateX(-50%);
-width:90%;max-width:900px;height:280px;
-border:2px solid #00eaff;padding:15px;
-background:rgba(0,0,0,.85)}
-#cmd{width:100%;background:black;color:#00eaff;border:none;font-size:1rem}
+footer{
+    text-align:center;
+    padding:30px;
+    background:#eee;
+    font-weight:bold;
+}
 </style>
 </head>
 
 <body>
 
-<!-- BOOT -->
-<div id="boot" class="center">
-<h1>AAYUSHMAN INDUSTRIES</h1>
-<p>J.A.R.V.I.S SYSTEM BOOTING...</p>
-<div id="bar"><div id="fill"></div></div>
+<!-- BACKGROUND MUSIC -->
+<audio id="bgmusic" loop>
+<source src="https://cdn.pixabay.com/audio/2022/10/25/audio_7e07cbd1e1.mp3" type="audio/mp3">
+</audio>
+
+<header>
+<h1>Rani Lakshmibai of Jhansi</h1>
+<h2>The Immortal Warrior Queen of India</h2>
+<button onclick="toggleMusic()">🎵 National Theme Music</button>
+</header>
+
+<!-- NARRATION AUDIO -->
+<div class="audio-box">
+<h2>Listen to Narration</h2>
+<button onclick="toggleNarration()">🔊 Listen / Stop Narration</button>
+<audio id="narration">
+<source src="https://cdn.pixabay.com/audio/2023/03/13/audio_9d8b7e43df.mp3" type="audio/mp3">
+</audio>
+<p><i>(Narration simulates documentary-style voice. Internet required.)</i></p>
 </div>
 
-<div class="grid"></div>
+<section>
+<h2>Introduction</h2>
+<img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/Rani_of_Jhansi.jpg" class="right">
+<p>
+Rani Lakshmibai of Jhansi stands among the greatest national treasures of India. Her life represents extraordinary courage, resistance, leadership, and sacrifice at a time when colonial oppression threatened India’s identity. She was not merely a queen defending her kingdom; she was a revolutionary who challenged the British Empire with unmatched bravery. Her story is not only about war but also about dignity, justice, and the unbreakable spirit of Indian womanhood.
+</p>
+<p>
+Born in the early nineteenth century, Rani Lakshmibai grew up in an India where political power was shifting rapidly into British hands. Despite social restrictions on women, she rose as a warrior-leader, administrator, and symbol of national pride. Her role in the Revolt of 1857 immortalized her in Indian history.
+</p>
+<div class="clear"></div>
+</section>
 
-<!-- NAME -->
-<div id="namePage" class="center" style="display:none">
-<h1>SECURE AI SYSTEM</h1>
-<input id="name" placeholder="ENTER NAME">
-<button onclick="checkName()">ENTER</button>
-</div>
+<section>
+<h2>Birth, Childhood, and Early Environment</h2>
+<img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Manikarnika_Tambe.jpg" class="left">
+<p>
+Rani Lakshmibai was born on 19 November 1828 in Varanasi. Her birth name was Manikarnika Tambe, affectionately called Manu. She belonged to a Marathi Brahmin family. Her childhood was marked by freedom, discipline, and exposure to politics due to her father’s association with the Peshwa’s court.
+</p>
+<p>
+Unlike girls of her time, Manu was encouraged to develop physical strength and intellectual curiosity. She learned horse riding, sword fighting, archery, and wrestling. These early experiences laid the foundation for her fearless personality and future leadership.
+</p>
+<div class="clear"></div>
+</section>
 
-<!-- PASS -->
-<div id="passPage" class="center" style="display:none">
-<h1>PASSWORD REQUIRED</h1>
-<input id="pass" type="password" placeholder="ENTER PASSWORD">
-<button onclick="checkPass()">VERIFY</button>
-</div>
+<section>
+<h2>Family Details</h2>
 
-<!-- WARNING -->
-<div id="warning" class="center">
-<h1>⚠ ACCESS DENIED ⚠</h1>
-<p id="tries">2 ATTEMPTS LEFT</p>
-</div>
+<h3>Father – Moropant Tambe</h3>
+<img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Moropant_Tambe.jpg" class="right">
+<p>
+Moropant Tambe was a progressive thinker and court official of Peshwa Baji Rao II. He believed in equality, courage, and education. After the early death of Manu’s mother, he raised her himself and ensured she received both academic and military training.
+</p>
+<div class="clear"></div>
 
-<!-- SCAN -->
-<div id="scan" class="center">
-<h1>FACE SCAN IN PROGRESS</h1>
-<div class="scanBox"><div class="scanLine"></div></div>
-</div>
+<h3>Mother – Bhagirathi Sapre</h3>
+<p>
+Bhagirathi Sapre passed away when Manikarnika was very young. Though her time with her daughter was brief, her cultural values and moral teachings deeply influenced the queen’s character.
+</p>
 
-<!-- AI -->
-<div id="ai">
-<div id="core"></div>
-<div id="terminal">
-<div id="output"></div>
-<input id="cmd" placeholder="> type command and press enter">
-</div>
-</div>
+<h3>Husband – Maharaja Gangadhar Rao</h3>
+<img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Gangadhar_Rao.jpg" class="left">
+<p>
+In 1842, Manikarnika married Maharaja Gangadhar Rao Newalkar of Jhansi. She was renamed Lakshmibai. As queen, she actively participated in governance and gained the trust of her people.
+</p>
+<div class="clear"></div>
 
-<!-- AUDIO -->
-<audio id="hum" loop src="https://assets.mixkit.co/sfx/preview/mixkit-sci-fi-hum-2135.mp3"></audio>
-<audio id="bgm" loop src="https://assets.mixkit.co/music/preview/mixkit-cyberpunk-ambient-2161.mp3"></audio>
+<h3>Son – Damodar Rao (Adopted)</h3>
+<img src="https://upload.wikimedia.org/wikipedia/commons/0/02/Damodar_Rao.jpg" class="right">
+<p>
+After losing her biological son, the royal couple adopted Damodar Rao. The British refusal to accept him as heir under the Doctrine of Lapse became the root cause of the Jhansi conflict.
+</p>
+<div class="clear"></div>
+
+<h3>Teachers and Training</h3>
+<p>
+Rani Lakshmibai was trained by expert warriors and scholars from the Peshwa’s court. Her education included literature, philosophy, statecraft, and advanced warfare techniques.
+</p>
+</section>
+
+<section>
+<h2>Timeline of Rani Lakshmibai</h2>
+<table class="timeline">
+<tr><th>Year</th><th>Event</th></tr>
+<tr><td>1828</td><td>Birth of Manikarnika Tambe in Varanasi</td></tr>
+<tr><td>1842</td><td>Marriage to Maharaja Gangadhar Rao</td></tr>
+<tr><td>1853</td><td>Death of Maharaja; adoption of Damodar Rao</td></tr>
+<tr><td>1854</td><td>British annex Jhansi under Doctrine of Lapse</td></tr>
+<tr><td>1857</td><td>Leadership in the Revolt of 1857</td></tr>
+<tr><td>1858</td><td>Martyrdom in Gwalior</td></tr>
+</table>
+</section>
+
+<section>
+<h2>Role in the Revolt of 1857</h2>
+<img src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Rani_Lakshmi_Bai_Statue.jpg" class="right">
+<p>
+During the Revolt of 1857, Rani Lakshmibai emerged as one of its strongest leaders. She personally led her army, defended Jhansi, and fought with unmatched bravery. Her leadership challenged British military power and inspired resistance across India.
+</p>
+<div class="clear"></div>
+</section>
+
+<section class="video">
+<h2>Documentary Video</h2>
+<iframe width="560" height="315"
+src="https://www.youtube.com/embed/jjXz8E6Gk4g"
+frameborder="0" allowfullscreen></iframe>
+</section>
+
+<footer>
+Project prepared by <b>Aayushman Singh</b> 🇮🇳  
+<br>“Khoob ladi mardani, woh to Jhansi wali Rani thi”
+</footer>
 
 <script>
-let fill=document.getElementById("fill"),w=0;
-let boot=setInterval(()=>{
-w+=5;fill.style.width=w+"%";
-if(w>=100){
-clearInterval(boot);
-document.getElementById("boot").style.display="none";
-namePage.style.display="flex";
+function toggleMusic(){
+    let music = document.getElementById("bgmusic");
+    if(music.paused){
+        music.volume = 0.2;
+        music.play();
+    }else{
+        music.pause();
+    }
 }
-},200);
 
-let attempts=2;
-function speak(t){
-let u=new SpeechSynthesisUtterance(t);
-u.rate=.7;u.pitch=.5;
-speechSynthesis.speak(u);
-}
-function checkName(){
-name.value.toUpperCase()==="AAYUSHMAN"?
-(namePage.style.display="none",passPage.style.display="flex"):fail();
-}
-function checkPass(){
-pass.value==="JARVIS"?
-(passPage.style.display="none",scan.style.display="flex",
-setTimeout(()=>{
-scan.style.display="none";
-ai.style.display="block";
-hum.volume=.3;bgm.volume=.25;
-hum.play();bgm.play();
-speak("WELCOME BACK AAYUSHMAN. LET'S COMPLETE THE WORK.");
-},3000)):fail();
-}
-function fail(){
-attempts--;
-warning.style.display="flex";
-tries.innerText=attempts+" ATTEMPTS LEFT";
-setTimeout(()=>{warning.style.display="none";namePage.style.display="flex"},2000);
+function toggleNarration(){
+    let n = document.getElementById("narration");
+    if(n.paused){
+        n.play();
+    }else{
+        n.pause();
+        n.currentTime = 0;
+    }
 }
 </script>
 
