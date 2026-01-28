@@ -2,200 +2,238 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Rani Lakshmibai – Complete National Treasure Project</title>
+<title>Rani Lakshmi Bai – The Warrior Queen of India</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Poppins&display=swap" rel="stylesheet">
+
 <style>
-:root{
-    --bg:#f4f4f4;
-    --card:#ffffff;
-    --text:#000;
-}
-.dark{
-    --bg:#0e0e0e;
-    --card:#1c1c1c;
-    --text:#f5f5f5;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 body{
-    margin:0;
-    font-family: Georgia, serif;
-    background:var(--bg);
-    color:var(--text);
-    line-height:2;
-}
-.cover{
-    height:100vh;
-    background:linear-gradient(120deg,#7b0000,#ff9933,#138808);
+    font-family: 'Poppins', sans-serif;
     color:white;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-    text-align:center;
+    background:black;
+    overflow-x:hidden;
 }
-.cover h1{font-size:50px}
-.cover h2{font-weight:normal}
-button{
-    padding:12px 25px;
-    border:none;
-    border-radius:25px;
-    font-size:17px;
-    cursor:pointer;
-    background:#7b1e1e;
-    color:white;
-}
-button:hover{opacity:0.9}
-section{
-    background:var(--card);
-    margin:40px;
-    padding:50px;
-    border-radius:20px;
-    box-shadow:0 15px 35px rgba(0,0,0,0.25);
-}
-h1,h2,h3{color:#b22222}
-img{
-    width:260px;
-    border-radius:15px;
-    margin:15px;
-    box-shadow:0 8px 20px rgba(0,0,0,0.3);
-}
-.left{float:left}
-.right{float:right}
-.clear{clear:both}
-.timeline{
+
+/* Animated Background */
+body::before{
+    content:"";
+    position:fixed;
+    top:0;
+    left:0;
     width:100%;
-    border-collapse:collapse;
+    height:100%;
+    background:
+        linear-gradient(120deg, rgba(255,69,0,0.4), rgba(0,128,0,0.4)),
+        url("https://images.unsplash.com/photo-1586864387789-628af9feed72?auto=format&fit=crop&w=3840&q=80");
+    background-size:cover;
+    background-attachment:fixed;
+    animation:bgmove 20s infinite alternate;
+    z-index:-1;
 }
-.timeline th,.timeline td{
-    border:1px solid #aaa;
-    padding:14px;
+@keyframes bgmove{
+    0%{filter:hue-rotate(0deg);}
+    100%{filter:hue-rotate(20deg);}
 }
-.timeline th{
+
+/* Navbar */
+nav{
+    position:fixed;
+    top:0;
+    width:100%;
+    background:rgba(0,0,0,0.7);
+    padding:15px;
+    text-align:center;
+    z-index:10;
+}
+nav button{
+    background:none;
+    border:1px solid #ff9933;
+    color:white;
+    padding:10px 15px;
+    margin:5px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:0.3s;
+}
+nav button:hover{
     background:#ff9933;
+    color:black;
 }
-.gallery img{
-    width:200px;
+
+/* Pages */
+.page{
+    display:none;
+    padding:120px 10% 60px;
+    animation:fade 1s;
 }
+.page.active{
+    display:block;
+}
+@keyframes fade{
+    from{opacity:0; transform:translateY(20px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+h1,h2{
+    font-family:'Cinzel', serif;
+    color:#ffcc66;
+    margin-bottom:20px;
+}
+p{
+    line-height:1.8;
+    margin-bottom:15px;
+    text-align:justify;
+}
+
+/* Image Styling */
+img{
+    max-width:100%;
+    border:3px solid #ff9933;
+    border-radius:10px;
+    margin:20px 0;
+}
+
+/* Slogans */
+.slogan{
+    font-size:1.4rem;
+    font-weight:bold;
+    text-align:center;
+    margin:25px 0;
+    color:#00ffcc;
+    animation:glow 2s infinite alternate;
+}
+@keyframes glow{
+    from{text-shadow:0 0 5px #00ffcc;}
+    to{text-shadow:0 0 20px #00ffcc;}
+}
+
+/* Footer */
 footer{
     text-align:center;
-    padding:30px;
-    background:#ddd;
-    font-weight:bold;
+    padding:20px;
+    background:rgba(0,0,0,0.6);
 }
 </style>
 </head>
 
 <body>
 
-<!-- BACKGROUND MUSIC -->
-<audio id="bgmusic" loop>
-<source src="https://cdn.pixabay.com/audio/2022/11/22/audio_f9c4e0bfb7.mp3">
-</audio>
+<nav>
+    <button onclick="showPage('home')">Home</button>
+    <button onclick="showPage('bio')">Biography</button>
+    <button onclick="showPage('history')">Contribution</button>
+    <button onclick="showPage('slogans')">Slogans</button>
+    <button onclick="showPage('gallery')">Gallery</button>
+    <button onclick="showPage('video')">Video</button>
+</nav>
 
-<!-- COVER PAGE -->
-<div class="cover">
-    <h1>RANI LAKSHMIBAI OF JHANSI</h1>
-    <h2>The Immortal Warrior Queen of India</h2>
-    <p>National History Project</p>
-    <button onclick="startProject()">Enter Project</button>
-</div>
-
-<!-- CONTROLS -->
-<section>
-<button onclick="toggleMusic()">🎵 Patriotic Background Music</button>
-<button onclick="toggleNarration()">🔊 Listen / Stop Narration</button>
-<button onclick="toggleDark()">🌙 Dark Mode</button>
-
-<audio id="narration">
-<source src="https://cdn.pixabay.com/audio/2023/03/13/audio_9d8b7e43df.mp3">
-</audio>
+<!-- HOME -->
+<section id="home" class="page active">
+    <h1>Rani Lakshmi Bai – The Warrior Queen of Jhansi</h1>
+    <p>
+        Rani Lakshmi Bai stands as one of the most courageous and inspiring figures in Indian history.
+        She symbolizes fearless patriotism, sacrifice, and resistance against injustice.
+        Her life story continues to ignite the spirit of freedom and bravery in millions of Indians.
+    </p>
+    <img src="https://images.unsplash.com/photo-1593697820980-7d3a8d49c3c6?auto=format&fit=crop&w=3840&q=80">
 </section>
 
-<section>
-<h2>Introduction</h2>
-<img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/Rani_of_Jhansi.jpg" class="right">
+<!-- BIOGRAPHY -->
+<section id="bio" class="page">
+<h2>Early Life and Background</h2>
 <p>
-Rani Lakshmibai of Jhansi occupies a sacred place in Indian history. She was not only a queen but also a fearless warrior, visionary leader, and symbol of resistance against colonial injustice. At a time when women were denied public roles, she led armies, defended her kingdom, and sacrificed her life for freedom.
+Rani Lakshmi Bai was born on 19 November 1828 in Varanasi. Her childhood name was Manikarnika Tambe,
+lovingly called Manu. From an early age, she showed exceptional courage and intelligence.
+Unlike most girls of her time, she was trained in horse riding, sword fighting, archery,
+and self-defense.
 </p>
-<div class="clear"></div>
-</section>
 
-<section>
-<h2>Family and Early Life</h2>
-<img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Manikarnika_Tambe.jpg" class="left">
 <p>
-Born as Manikarnika Tambe on 19 November 1828 in Varanasi, she was raised by her father Moropant Tambe, a court official of Peshwa Baji Rao II. After her mother Bhagirathi Sapre’s early death, her father ensured she received a unique education combining academics and warfare.
+She was married to Maharaja Gangadhar Rao, the ruler of Jhansi, and became the queen of Jhansi.
+After the untimely death of her husband and the British refusal to accept her adopted son as heir,
+she resolved to protect her kingdom with unwavering determination.
 </p>
-<div class="clear"></div>
-</section>
 
-<section>
-<h2>Marriage, Son and Doctrine of Lapse</h2>
-<img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Gangadhar_Rao.jpg" class="right">
+<img src="https://images.unsplash.com/photo-1609599006353-49f7a2ddf31a?auto=format&fit=crop&w=3840&q=80">
+
 <p>
-She married Maharaja Gangadhar Rao of Jhansi in 1842. After the death of their biological child, the couple adopted Damodar Rao. The British refusal to recognize him under the Doctrine of Lapse became the main cause of the conflict.
+Her famous declaration, “Main apni Jhansi nahi doongi,” became a powerful symbol of resistance.
+She proved that courage and leadership know no gender.
 </p>
-<div class="clear"></div>
 </section>
 
-<section>
-<h2>Timeline of Rani Lakshmibai</h2>
-<table class="timeline">
-<tr><th>Year</th><th>Event</th></tr>
-<tr><td>1828</td><td>Birth in Varanasi</td></tr>
-<tr><td>1842</td><td>Marriage to Gangadhar Rao</td></tr>
-<tr><td>1853</td><td>Adoption of Damodar Rao</td></tr>
-<tr><td>1854</td><td>British annex Jhansi</td></tr>
-<tr><td>1857</td><td>Leadership in Revolt</td></tr>
-<tr><td>1858</td><td>Martyrdom at Gwalior</td></tr>
-</table>
+<!-- CONTRIBUTION -->
+<section id="history" class="page">
+<h2>Role in the First War of Independence (1857)</h2>
+<p>
+Rani Lakshmi Bai played a central role in the Revolt of 1857, considered India’s first war of independence.
+She organized her army, trained women soldiers, and fought bravely against the British forces.
+Her leadership inspired not only soldiers but also common citizens.
+</p>
+
+<p>
+Mounted on horseback with her infant tied to her back, she fought with unmatched valor.
+Even in the face of overwhelming odds, she never surrendered.
+Her martyrdom on the battlefield made her immortal in Indian history.
+</p>
+
+<p>
+Her contribution was not limited to warfare. She stood for justice, self-respect,
+and the right of Indians to rule their own land.
+</p>
+
+<img src="https://images.unsplash.com/photo-1604762524889-3c72d0c8d5ab?auto=format&fit=crop&w=3840&q=80">
 </section>
 
-<section>
-<h2>Image Gallery</h2>
-<div class="gallery">
-<img src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Rani_Lakshmi_Bai_Statue.jpg">
-<img src="https://upload.wikimedia.org/wikipedia/commons/9/9c/Rani_Lakshmibai_horse.jpg">
-<img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Jhansi_fort.jpg">
-</div>
+<!-- SLOGANS -->
+<section id="slogans" class="page">
+<h2>Patriotic Slogans</h2>
+
+<div class="slogan">“Khoob ladi mardani, woh toh Jhansi wali Rani thi!”</div>
+<div class="slogan">“Main apni Jhansi nahi doongi!”</div>
+<div class="slogan">“Rani Lakshmi Bai – Courage Beyond Time”</div>
+<div class="slogan">“The Flame of Freedom Never Dies”</div>
+
 </section>
 
-<section>
+<!-- GALLERY -->
+<section id="gallery" class="page">
+<h2>Gallery</h2>
+<img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267b7?auto=format&fit=crop&w=3840&q=80">
+<img src="https://images.unsplash.com/photo-1593697820766-6a2b1e6b9b6d?auto=format&fit=crop&w=3840&q=80">
+<img src="https://images.unsplash.com/photo-1602600171268-66b69e5258ff?auto=format&fit=crop&w=3840&q=80">
+</section>
+
+<!-- VIDEO -->
+<section id="video" class="page">
 <h2>Documentary Video</h2>
-<iframe width="560" height="315"
-src="https://www.youtube.com/embed/jjXz8E6Gk4g"
-allowfullscreen></iframe>
-</section>
+<p>Watch this inspirational documentary about Rani Lakshmi Bai:</p>
 
-<section>
-<h2>Bibliography & Sources</h2>
-<ul>
-<li>NCERT History Textbook (Class 8 & 10)</li>
-<li>National Archives of India</li>
-<li>Encyclopaedia Britannica</li>
-<li>Wikipedia (Educational reference)</li>
-</ul>
+<iframe width="100%" height="500"
+src="https://www.youtube.com/embed/KwF5L3jHjio"
+title="Rani Lakshmi Bai Documentary"
+frameborder="0"
+allowfullscreen>
+</iframe>
 </section>
 
 <footer>
-Project by <b>Aayushman Singh</b> 🇮🇳  
-<br>“Khoob ladi mardani, woh to Jhansi wali Rani thi”
+🇮🇳 Tribute to Rani Lakshmi Bai | Designed by Aayushman Singh 🇮🇳
 </footer>
 
 <script>
-function startProject(){
-    document.querySelector(".cover").style.display="none";
-}
-function toggleMusic(){
-    let m=document.getElementById("bgmusic");
-    if(m.paused){m.volume=0.15;m.play()}else{m.pause()}
-}
-function toggleNarration(){
-    let n=document.getElementById("narration");
-    if(n.paused){n.play()}else{n.pause();n.currentTime=0}
-}
-function toggleDark(){
-    document.body.classList.toggle("dark");
+function showPage(id){
+    document.querySelectorAll('.page').forEach(p=>{
+        p.classList.remove('active');
+    });
+    document.getElementById(id).classList.add('active');
 }
 </script>
 
