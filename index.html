@@ -2,238 +2,271 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Rani Lakshmi Bai – The Warrior Queen of India</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- Google Font -->
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Poppins&display=swap" rel="stylesheet">
-
+<title>Ayushman Gaming</title>
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-body{
-    font-family: 'Poppins', sans-serif;
-    color:white;
-    background:black;
-    overflow-x:hidden;
-}
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
-/* Animated Background */
-body::before{
-    content:"";
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:
-        linear-gradient(120deg, rgba(255,69,0,0.4), rgba(0,128,0,0.4)),
-        url("https://images.unsplash.com/photo-1586864387789-628af9feed72?auto=format&fit=crop&w=3840&q=80");
-    background-size:cover;
-    background-attachment:fixed;
-    animation:bgmove 20s infinite alternate;
-    z-index:-1;
-}
-@keyframes bgmove{
-    0%{filter:hue-rotate(0deg);}
-    100%{filter:hue-rotate(20deg);}
-}
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Roboto', sans-serif;}
+body { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; transition:background 3s; }
 
-/* Navbar */
-nav{
-    position:fixed;
-    top:0;
-    width:100%;
-    background:rgba(0,0,0,0.7);
-    padding:15px;
-    text-align:center;
-    z-index:10;
-}
-nav button{
-    background:none;
-    border:1px solid #ff9933;
-    color:white;
-    padding:10px 15px;
-    margin:5px;
-    cursor:pointer;
-    font-weight:bold;
-    transition:0.3s;
-}
-nav button:hover{
-    background:#ff9933;
-    color:black;
-}
+h1,h2,h3{text-align:center; margin-bottom:15px;}
+.container { width:90%; max-width:900px; margin:auto; padding:20px; color:white; text-align:center;}
 
-/* Pages */
-.page{
-    display:none;
-    padding:120px 10% 60px;
-    animation:fade 1s;
-}
-.page.active{
-    display:block;
-}
-@keyframes fade{
-    from{opacity:0; transform:translateY(20px);}
-    to{opacity:1; transform:translateY(0);}
-}
+input[type="text"] { padding:10px; margin:5px; border-radius:5px; border:none; outline:none; width:200px; font-size:16px;}
+select { padding:10px; margin:5px; border-radius:5px; border:none; font-size:16px;}
+button { padding:10px 20px; margin:10px; font-size:16px; border:none; border-radius:10px; cursor:pointer; background:linear-gradient(45deg,#ff4b1f,#1fddff); color:#fff; transition:0.3s; box-shadow:0 0 10px rgba(255,255,255,0.5);}
+button:hover { transform:scale(1.1); box-shadow:0 0 20px rgba(255,255,255,0.8);}
+.hidden{ display:none; }
+.player-box { margin:10px 0; }
+.fade { animation: fadein 0.5s; }
+@keyframes fadein { from{opacity:0;} to{opacity:1;} }
 
-h1,h2{
-    font-family:'Cinzel', serif;
-    color:#ffcc66;
-    margin-bottom:20px;
-}
-p{
-    line-height:1.8;
-    margin-bottom:15px;
-    text-align:justify;
-}
-
-/* Image Styling */
-img{
-    max-width:100%;
-    border:3px solid #ff9933;
-    border-radius:10px;
-    margin:20px 0;
-}
-
-/* Slogans */
-.slogan{
-    font-size:1.4rem;
-    font-weight:bold;
-    text-align:center;
-    margin:25px 0;
-    color:#00ffcc;
-    animation:glow 2s infinite alternate;
-}
-@keyframes glow{
-    from{text-shadow:0 0 5px #00ffcc;}
-    to{text-shadow:0 0 20px #00ffcc;}
-}
-
-/* Footer */
-footer{
-    text-align:center;
-    padding:20px;
-    background:rgba(0,0,0,0.6);
-}
+.result-box { display:flex; flex-wrap:wrap; justify-content:center; margin-top:20px;}
+.card { background:#222; border-radius:15px; padding:15px; margin:10px; min-width:150px; text-align:center; box-shadow:0 0 20px rgba(0,255,255,0.3); transition: transform 0.3s;}
+.card:hover { transform:scale(1.05);}
 </style>
 </head>
-
 <body>
 
-<nav>
-    <button onclick="showPage('home')">Home</button>
-    <button onclick="showPage('bio')">Biography</button>
-    <button onclick="showPage('history')">Contribution</button>
-    <button onclick="showPage('slogans')">Slogans</button>
-    <button onclick="showPage('gallery')">Gallery</button>
-    <button onclick="showPage('video')">Video</button>
-</nav>
+<!-- PAGE 1: Player Registration -->
+<div id="page1" class="container fade">
+<h1>🔥🔥Ayushman Gaming🔥🔥</h1>
+<h2>Enter Player Names</h2>
+<div id="playersContainer"></div>
+<button id="playGameBtn" class="hidden">Play the Game</button>
+</div>
 
-<!-- HOME -->
-<section id="home" class="page active">
-    <h1>Rani Lakshmi Bai – The Warrior Queen of Jhansi</h1>
-    <p>
-        Rani Lakshmi Bai stands as one of the most courageous and inspiring figures in Indian history.
-        She symbolizes fearless patriotism, sacrifice, and resistance against injustice.
-        Her life story continues to ignite the spirit of freedom and bravery in millions of Indians.
-    </p>
-    <img src="https://images.unsplash.com/photo-1593697820980-7d3a8d49c3c6?auto=format&fit=crop&w=3840&q=80">
-</section>
+<!-- PAGE 2: Safe/Imposter -->
+<div id="page2" class="container hidden fade">
+<h2 id="currentPlayerName"></h2>
+<button id="confidentialBtn">Confidential</button>
+<h3 id="resultDisplay"></h3>
+<button id="nextPlayerBtn" class="hidden">Next Player</button>
+</div>
 
-<!-- BIOGRAPHY -->
-<section id="bio" class="page">
-<h2>Early Life and Background</h2>
-<p>
-Rani Lakshmi Bai was born on 19 November 1828 in Varanasi. Her childhood name was Manikarnika Tambe,
-lovingly called Manu. From an early age, she showed exceptional courage and intelligence.
-Unlike most girls of her time, she was trained in horse riding, sword fighting, archery,
-and self-defense.
-</p>
+<!-- PAGE 3: Questions -->
+<div id="page3" class="container hidden fade">
+<h2 id="questionPlayerName"></h2>
+<div id="questionContainer">
+<p id="questionText"></p>
+<input type="text" id="answerInput" placeholder="Your answer">
+<button id="nextQuestionBtn">Next</button>
+</div>
+</div>
 
-<p>
-She was married to Maharaja Gangadhar Rao, the ruler of Jhansi, and became the queen of Jhansi.
-After the untimely death of her husband and the British refusal to accept her adopted son as heir,
-she resolved to protect her kingdom with unwavering determination.
-</p>
+<!-- PAGE 4: Voting -->
+<div id="page4" class="container hidden fade">
+<h1>Vote the Imposter</h1>
+<div id="votingContainer"></div>
+<button id="submitVoteBtn">Submit Votes</button>
+</div>
 
-<img src="https://images.unsplash.com/photo-1609599006353-49f7a2ddf31a?auto=format&fit=crop&w=3840&q=80">
-
-<p>
-Her famous declaration, “Main apni Jhansi nahi doongi,” became a powerful symbol of resistance.
-She proved that courage and leadership know no gender.
-</p>
-</section>
-
-<!-- CONTRIBUTION -->
-<section id="history" class="page">
-<h2>Role in the First War of Independence (1857)</h2>
-<p>
-Rani Lakshmi Bai played a central role in the Revolt of 1857, considered India’s first war of independence.
-She organized her army, trained women soldiers, and fought bravely against the British forces.
-Her leadership inspired not only soldiers but also common citizens.
-</p>
-
-<p>
-Mounted on horseback with her infant tied to her back, she fought with unmatched valor.
-Even in the face of overwhelming odds, she never surrendered.
-Her martyrdom on the battlefield made her immortal in Indian history.
-</p>
-
-<p>
-Her contribution was not limited to warfare. She stood for justice, self-respect,
-and the right of Indians to rule their own land.
-</p>
-
-<img src="https://images.unsplash.com/photo-1604762524889-3c72d0c8d5ab?auto=format&fit=crop&w=3840&q=80">
-</section>
-
-<!-- SLOGANS -->
-<section id="slogans" class="page">
-<h2>Patriotic Slogans</h2>
-
-<div class="slogan">“Khoob ladi mardani, woh toh Jhansi wali Rani thi!”</div>
-<div class="slogan">“Main apni Jhansi nahi doongi!”</div>
-<div class="slogan">“Rani Lakshmi Bai – Courage Beyond Time”</div>
-<div class="slogan">“The Flame of Freedom Never Dies”</div>
-
-</section>
-
-<!-- GALLERY -->
-<section id="gallery" class="page">
-<h2>Gallery</h2>
-<img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267b7?auto=format&fit=crop&w=3840&q=80">
-<img src="https://images.unsplash.com/photo-1593697820766-6a2b1e6b9b6d?auto=format&fit=crop&w=3840&q=80">
-<img src="https://images.unsplash.com/photo-1602600171268-66b69e5258ff?auto=format&fit=crop&w=3840&q=80">
-</section>
-
-<!-- VIDEO -->
-<section id="video" class="page">
-<h2>Documentary Video</h2>
-<p>Watch this inspirational documentary about Rani Lakshmi Bai:</p>
-
-<iframe width="100%" height="500"
-src="https://www.youtube.com/embed/KwF5L3jHjio"
-title="Rani Lakshmi Bai Documentary"
-frameborder="0"
-allowfullscreen>
-</iframe>
-</section>
-
-<footer>
-🇮🇳 Tribute to Rani Lakshmi Bai | Designed by Aayushman Singh 🇮🇳
-</footer>
+<!-- PAGE 5: Voting Result -->
+<div id="page5" class="container hidden fade">
+<h1 id="votingResultText"></h1>
+<div id="finalResult" class="result-box"></div>
+</div>
 
 <script>
-function showPage(id){
-    document.querySelectorAll('.page').forEach(p=>{
-        p.classList.remove('active');
+// ---------------- SETTINGS ----------------
+const characters = ["ANSH","SRISHTI","KHUSHI","ISHU","AARUSH","KUNDAN","AVISHA","DABLOO","RUDRA","DAKSH","PRIYAM","SIDDHI","GOPAL","PAKO","CHUNNU","NAND","PRATAP","SUNITA","BABY","PUNAM","DOLLY","SUDHA","TUNNI"];
+let players = [];
+let assignedCharacter = ""; 
+let imposter = "";
+let currentIndex = 0;
+let questionIndex = 0;
+const questions = [
+"Your relation to the character?",
+"Number of sons of the character?",
+"Maximum age of the character?"
+];
+let questionAnswers = {};
+let votes = {};
+
+// --------------- BACKGROUND COLOR ANIMATION ---------------
+const colors = ["#ff4b1f","#1fddff","#ffb347","#6a11cb","#ff4e50","#1fd1f9","#f7971e"];
+let colorIndex = 0;
+function animateBackground(){
+    document.body.style.background = colors[colorIndex];
+    colorIndex = (colorIndex +1) % colors.length;
+    setTimeout(animateBackground,3000);
+}
+animateBackground();
+
+// ---------------- PAGE 1: Player Registration ----------------
+const playersContainer = document.getElementById('playersContainer');
+const playGameBtn = document.getElementById('playGameBtn');
+
+function addPlayerInput(){
+    const div = document.createElement('div');
+    div.classList.add('player-box');
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.placeholder = `Player ${playersContainer.children.length +1} Name`;
+    input.addEventListener('input', ()=>{
+        const inputs = Array.from(playersContainer.querySelectorAll('input'));
+        const lastInput = inputs[inputs.length -1];
+        if(lastInput.value.trim() !== ""){
+            addPlayerInput();
+        }
+        togglePlayButton();
     });
-    document.getElementById(id).classList.add('active');
+    div.appendChild(input);
+    playersContainer.appendChild(div);
+}
+function togglePlayButton(){
+    const filled = Array.from(playersContainer.querySelectorAll('input')).filter(i=>i.value.trim()!=="");
+    playGameBtn.classList.toggle('hidden', filled.length <2);
+}
+addPlayerInput();
+
+playGameBtn.addEventListener('click', ()=>{
+    players = Array.from(playersContainer.querySelectorAll('input')).map(i=>i.value.trim()).filter(n=>n!=="");
+    assignImposterAndCharacter();
+    showPage2();
+});
+
+// ---------------- PAGE 2: Safe / Imposter ----------------
+const page1 = document.getElementById('page1');
+const page2 = document.getElementById('page2');
+const currentPlayerName = document.getElementById('currentPlayerName');
+const confidentialBtn = document.getElementById('confidentialBtn');
+const resultDisplay = document.getElementById('resultDisplay');
+const nextPlayerBtn = document.getElementById('nextPlayerBtn');
+
+function assignImposterAndCharacter(){
+    const randIndex = Math.floor(Math.random()*players.length);
+    imposter = players[randIndex];
+    assignedCharacter = characters[Math.floor(Math.random()*characters.length)];
+}
+
+function showPage2(){
+    page1.classList.add('hidden');
+    page2.classList.remove('hidden');
+    currentIndex=0;
+    loadCurrentPlayer();
+}
+
+function loadCurrentPlayer(){
+    const player = players[currentIndex];
+    currentPlayerName.textContent = player;
+    resultDisplay.textContent = "";
+    confidentialBtn.classList.remove('hidden');
+    nextPlayerBtn.classList.add('hidden');
+}
+
+confidentialBtn.addEventListener('click', ()=>{
+    const player = players[currentIndex];
+    if(player === imposter){
+        resultDisplay.textContent = "Imposter ❌";
+    } else {
+        resultDisplay.textContent = `Safe ✅ - Character: ${assignedCharacter}`;
+    }
+    confidentialBtn.classList.add('hidden');
+    nextPlayerBtn.classList.remove('hidden');
+});
+
+nextPlayerBtn.addEventListener('click', ()=>{
+    currentIndex++;
+    if(currentIndex<players.length){
+        loadCurrentPlayer();
+    } else {
+        showPage3();
+    }
+});
+
+// ---------------- PAGE 3: Questions ----------------
+const page3 = document.getElementById('page3');
+const questionPlayerName = document.getElementById('questionPlayerName');
+const questionText = document.getElementById('questionText');
+const answerInput = document.getElementById('answerInput');
+const nextQuestionBtn = document.getElementById('nextQuestionBtn');
+
+function showPage3(){
+    page2.classList.add('hidden');
+    page3.classList.remove('hidden');
+    currentIndex = 0;
+    questionIndex = 0;
+    loadQuestion();
+}
+
+function loadQuestion(){
+    const player = players[currentIndex];
+    questionPlayerName.textContent = player;
+    questionText.textContent = questions[questionIndex];
+    answerInput.value = '';
+}
+
+nextQuestionBtn.addEventListener('click', ()=>{
+    const player = players[currentIndex];
+    if(!questionAnswers[player]) questionAnswers[player]=[];
+    questionAnswers[player].push(answerInput.value.trim());
+    questionIndex++;
+    if(questionIndex<questions.length){
+        loadQuestion();
+    } else {
+        questionIndex=0;
+        currentIndex++;
+        if(currentIndex<players.length){
+            loadQuestion();
+        } else {
+            showPage4();
+        }
+    }
+});
+
+// ---------------- PAGE 4: Voting ----------------
+const page4 = document.getElementById('page4');
+const votingContainer = document.getElementById('votingContainer');
+const submitVoteBtn = document.getElementById('submitVoteBtn');
+
+function showPage4(){
+    page3.classList.add('hidden');
+    page4.classList.remove('hidden');
+    votingContainer.innerHTML = "";
+    players.forEach(p=>{
+        const div = document.createElement('div');
+        div.innerHTML = `<h3>${p}</h3><select id="vote_${p}">
+            ${players.map(pl=>`<option value="${pl}">${pl}</option>`).join('')}
+        </select>`;
+        votingContainer.appendChild(div);
+    });
+}
+
+submitVoteBtn.addEventListener('click', ()=>{
+    votes = {};
+    players.forEach(p=>{
+        const selected = document.getElementById(`vote_${p}`).value;
+        votes[selected] = (votes[selected]||0)+1;
+    });
+    showPage5();
+});
+
+// ---------------- PAGE 5: Voting Result ----------------
+const page5 = document.getElementById('page5');
+const votingResultText = document.getElementById('votingResultText');
+const finalResult = document.getElementById('finalResult');
+
+function showPage5(){
+    page4.classList.add('hidden');
+    page5.classList.remove('hidden');
+    const maxVotes = Math.max(...Object.values(votes));
+    const imposterVotes = votes[imposter]||0;
+    if(Object.values(votes).filter(v=>v===maxVotes).length>1){
+        votingResultText.textContent = "It's a Draw!";
+    } else if(imposterVotes===maxVotes){
+        votingResultText.textContent = "Imposter lost the game! You win!";
+    } else {
+        votingResultText.textContent = "Sorry, Imposter wins!";
+    }
+    finalResult.innerHTML = "";
+    players.forEach(p=>{
+        const div = document.createElement('div');
+        div.classList.add('card');
+        div.innerHTML = `<h3>${p}</h3><p>${p===imposter?'Imposter ❌':'Safe ✅ - Character: '+assignedCharacter}</p>`;
+        finalResult.appendChild(div);
+    });
 }
 </script>
 
